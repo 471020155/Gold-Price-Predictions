@@ -272,7 +272,7 @@ axes[1].grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show();
 
-"""**Linear Regression it is a Beast Model**"""
+"""**Linear Regression it is a Best Model**"""
 
 linear_model = LinearRegression()
 linear_model.fit(x_train, y_train)
@@ -286,3 +286,54 @@ print("Linear Regression")
 print("R2 Score:", linear_r2)
 print("RMSE:", linear_rmse)
 print("MAE:", linear_mae)
+
+
+"""**Linear Regression after scalling**"""
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+x_train_scaled = scaler.fit_transform(x_train)
+x_test_scaled = scaler.transform(x_test)
+lr_scaled = LinearRegression()
+lr_scaled.fit(x_train_scaled, y_train)
+predictions_scaled = lr_scaled.predict(x_test_scaled)
+
+r2 = metrics.r2_score(y_test, predictions_scaled)
+rmse = np.sqrt(metrics.mean_squared_error(y_test, predictions_scaled))
+mae = metrics.mean_absolute_error(y_test, predictions_scaled)
+
+print("Linear Regression after Scaling")
+print("R2:", r2)
+print("RMSE:", rmse)
+print("MAE:", mae)
+
+"""**XGBoost model**"""
+
+from xgboost import XGBRegressor
+from sklearn import metrics
+import numpy as np
+
+# Create XGBoost model
+xgb_model = XGBRegressor(
+    n_estimators=100,
+    learning_rate=0.05,
+    max_depth=3,
+    random_state=2
+)
+
+# Train
+xgb_model.fit(x_train, y_train)
+
+# Predict
+xgb_predictions = xgb_model.predict(x_test)
+
+# Metrics
+xgb_r2 = metrics.r2_score(y_test, xgb_predictions)
+xgb_mse = metrics.mean_squared_error(y_test, xgb_predictions)
+xgb_rmse = np.sqrt(xgb_mse)
+xgb_mae = metrics.mean_absolute_error(y_test, xgb_predictions)
+
+print("XGBoost")
+print("R2 Score:", xgb_r2)
+print("RMSE:", xgb_rmse)
+print("MAE:", xgb_mae)
+
