@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+models/*.pkl
+.idea/
+.streamlit/
+*.log
